@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
+import unknownProfile from "../assets/unknownProfile.png";
 import AuthService from "../../services/auth.service";
 import {Container} from "react-bootstrap";
 import {required, vFirstName, vLastName,
@@ -103,7 +104,7 @@ class Signup extends Component {
         return (
             <div className="col-md-12">
                 <Container className={"w-25"}>
-                    <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="profile-img"
+                    <img src={unknownProfile} alt="profile-img"
                          className="img-thumbnail align-self-center" width={"256px"}/>
 
                     <Form onSubmit={this.handleRegister} ref={c => {this.form = c;}}>

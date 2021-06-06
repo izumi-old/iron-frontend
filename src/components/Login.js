@@ -3,39 +3,10 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
+import unknownProfile from "../assets/unknownProfile.png";
 import AuthService from "../services/auth.service";
 import {Container} from "react-bootstrap";
-import {isEmail} from "validator";
-
-const required = value => {
-    if (!value) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                Это поле является обязательным для ввода
-            </div>
-        );
-    }
-};
-
-const email = value => {
-    if (!isEmail(value)) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                Введённый адрес электронной почты некорректен
-            </div>
-        );
-    }
-};
-
-const vPassword = value => {
-    if (value.length < 3 || value.length > 40) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                Длина пароля должна быть от 3 до 40 символов
-            </div>
-        );
-    }
-};
+import {email, required, vPassword} from "../services/validation.service";
 
 class Login extends Component {
     constructor(props) {
@@ -109,7 +80,7 @@ class Login extends Component {
         return (
             <div className="col-md-12">
                 <Container className={"w-25"}>
-                    <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="profile-img"
+                    <img src={unknownProfile} alt="profile-img"
                         className="img-thumbnail align-self-center" width={"256px"}/>
 
                     <Form onSubmit={this.handleLogin} ref={c => {this.form = c;}}>
