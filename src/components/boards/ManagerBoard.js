@@ -1,10 +1,11 @@
 import React, {Component} from "react";
 import {Button, Container, Tab, Tabs} from "react-bootstrap";
 import caseService, {STATUS_APPROVED, STATUS_PENDING, STATUS_REJECTED} from "../../services/case.service";
-import CaseComponent from "../typical/CaseComponent";
+import CaseComponent from "../entity/CaseComponent";
 import {LOGGING_ENABLED} from "../../App";
 import CaseEntity from "../entity/Case";
 import ContainerPagination from "../paginated/ContainerPagination";
+import Case from "../entity/Case";
 
 class ManagerBoard extends Component {
     constructor(props) {
@@ -36,10 +37,30 @@ class ManagerBoard extends Component {
         }
 
         caseService.update(new CaseEntity(aCase.id, null, null, null, null,
-            null, STATUS_REJECTED, null))
+            null, null, STATUS_REJECTED, null))
             .then(response => {
                 if (LOGGING_ENABLED) {
                     console.log("Rejecting completed successfully. Response: ", response)
+                }
+                targetComponent.deleteByIdAndRerender(aCase.id);
+            });
+    }
+
+    approveCase(targetComponent, aCase) {
+        if (LOGGING_ENABLED) {
+            console.log("Trying to approve a case. Case: ", aCase);
+        }
+
+        caseService.update(new Case(aCase.id, null, null,null, null, null,
+            null, STATUS_APPROVED, null))
+            .then(response => {
+                if (LOGGING_ENABLED) {
+                    console.log("Approving completed successfully. Response: ", response)
+                }
+                if (response.statusClientSide === STATUS_APPROVED) {
+                    this.confirmedCasesComponent.addItemIfAbsent(aCase);
+                } else {
+                    this.acceptedCasesComponent.addItemIfAbsent(aCase);
                 }
                 targetComponent.deleteByIdAndRerender(aCase.id);
             });
@@ -49,8 +70,11 @@ class ManagerBoard extends Component {
         return (
             <div key={aCase.id} className={"w-auto d-flex flex-column justify-content-center p-5"}>
                 <CaseComponent aCase={aCase}/>
+                <Button variant={"success"} onClick={() => this.approveCase(targetComponent, aCase)}>
+                    Утвердить
+                </Button>
                 <Button variant={"warning"} onClick={() => this.rejectCase(targetComponent, aCase)}>
-                    Отозвать предложение
+                    Отозвать
                 </Button>
                 <hr className={"style1"}/>
             </div>

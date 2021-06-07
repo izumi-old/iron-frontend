@@ -6,7 +6,7 @@ import Footer from "./components/typical/Footer";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Contacts from "./components/typical/Contacts";
-import Login from "./components/Login";
+import Login from "./components/forms/Login";
 import Signup from "./components/forms/Signup";
 import ClientBoard from "./components/boards/ClientBoard";
 import ManagerBoard from "./components/boards/ManagerBoard";

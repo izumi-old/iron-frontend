@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import About from "./typical/About";
 import {Container} from "react-bootstrap";
-import LoansPaginated from "./paginated/LoansPaginated";
+import Loans from "./Loans";
 
 class Home extends Component {
     render() {
@@ -9,9 +9,9 @@ class Home extends Component {
             <Container className={"container-fluid"}>
                 <About/>
                 <hr className="mt-5 style1"/>
-                <div className="mt-5 text-center">
+                <div className="mt-5 text-center d-flex flex-column align-content-center">
                     <h2>Информация о доступных кредитах</h2>
-                    <LoansPaginated />
+                    <Loans />
                 </div>
                 <hr className="mt-5 style1"/>
             </Container>

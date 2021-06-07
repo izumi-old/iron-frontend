@@ -1,8 +1,9 @@
 class Case {
-    constructor(id, clientId, loanId, amount, durationMonths, paid, statusBankSide,
+    constructor(id, clientId, creatorId, loanId, amount, durationMonths, paid, statusBankSide,
                 statusClientSide, confirmationDate, closed, payments, loan) {
         this.id = id;
         this.clientId = clientId;
+        this.creatorId = creatorId;
         this.loanId = loanId;
         this.amount = amount;
         this.durationMonths = durationMonths;

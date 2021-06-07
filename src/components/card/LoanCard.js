@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Card} from "react-bootstrap";
-import LoanComponent from "../typical/LoanComponent";
+import LoanComponent from "../entity/LoanComponent";
 
 class LoanCard extends Component {
     constructor(props) {
@@ -13,8 +13,9 @@ class LoanCard extends Component {
 
     render() {
         return (
-            <Card key={this.state.loan.id} className={"w-50"}>
+            <Card className={"w-50"}>
                 <Card.Body>
+                    <Card.Title>#{this.state.loan.id}</Card.Title>
                     <Card.Text className={"text-start"}>
                         <LoanComponent loan={this.state.loan}/>
                     </Card.Text>

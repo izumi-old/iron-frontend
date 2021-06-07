@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Button, Container, Form} from "react-bootstrap";
 import caseService, {STATUS_PENDING} from "../../services/case.service";
+import authService from "../../services/auth.service";
 import Case from "../entity/Case";
 import {LOGGING_ENABLED} from "../../App";
 import FormSingleSelectLoansPaginated from "../paginated/FormSingleSelectLoansPaginated";
@@ -48,6 +49,7 @@ class CreateCase extends Component {
         }
         let toSave = new Case(null,
             this.state.clientId,
+            authService.getCurrentPerson().id,
             this.state.loanId,
             this.state.amount,
             this.state.durationMonths,
@@ -146,6 +148,12 @@ class CreateCase extends Component {
             <div className="col-md-12">
                 <Container className={"w-50"}>
                     <Form>
+                        <Form.Group className={"border-primary p-5"} controlId="loan">
+                            <Form.Label>Выберите кредит</Form.Label>
+                            <FormSingleSelectLoansPaginated itemsPageSize={10}
+                                                            handleSelected={this.selectLoan} />
+                        </Form.Group>
+
                         <Form.Group controlId="amount">
                             <Form.Label>Сумма</Form.Label>
                             <Form.Control
@@ -156,7 +164,9 @@ class CreateCase extends Component {
                                 placeholder="Введите сумму"
                                 onChange={this.onChangeAmount} />
                             <Form.Text className="text-muted">
-                                Сумма должна быть в диапазоне, зависящем от выбранного кредита
+                                Сумма должна быть в диапазоне от {this.state.loan ?
+                                this.state.loan.minAmount : 0} до {this.state.loan ?
+                                this.state.loan.maxAmount : 0}
                             </Form.Text>
                         </Form.Group>
 
@@ -171,15 +181,12 @@ class CreateCase extends Component {
                                 onChange={this.onChangeDurationMonths} />
                             <Form.Control.Feedback>Подходит</Form.Control.Feedback>
                             <Form.Text className="text-muted">
-                                Срок должен быть в диапазоне, зависящем от выбранного кредита
+                                Срок должен быть в диапазоне от {this.state.loan ?
+                                this.state.loan.minDurationMonths : 0} до {this.state.loan ?
+                                this.state.loan.maxDurationMonths : 0} месяцев
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className={"border-primary p-5"} controlId="loan">
-                            <Form.Label>Выберите кредит</Form.Label>
-                            <FormSingleSelectLoansPaginated itemsPageSize={10}
-                                handleSelected={this.selectLoan} />
-                        </Form.Group>
                         <Form.Group className={"border-primary p-5"} controlId={"client"}>
                             <Form.Label>Выберите клиента</Form.Label>
                             <FormSingleSelectClientsPaginated itemsPageSize={10}

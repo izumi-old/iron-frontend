@@ -3,7 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
-import unknownProfile from "../assets/unknownProfile.png";
+import unknownProfile from "../../assets/unknownProfile.png";
 import AuthService from "../../services/auth.service";
 import {Container} from "react-bootstrap";
 import {required, vFirstName, vLastName,

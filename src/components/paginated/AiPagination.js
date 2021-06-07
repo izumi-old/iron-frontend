@@ -22,13 +22,12 @@ class AiPagination extends Component {
         this.deleteById = this.deleteById.bind(this);
         this.updateItemAndRerender = this.updateItemAndRerender.bind(this);
         this.getSortedItems = this.getSortedItems.bind(this);
+        this.findItemIndex = this.findItemIndex.bind(this);
+        this.addItemIfAbsent = this.addItemIfAbsent.bind(this);
         this.gettingFunction = props.gettingFunction;
     }
 
-    deleteById(id) {
-        if (LOGGING_ENABLED) {
-            console.log("Deleting an item by id. Id: ", id, "\nitems:", this.state.items);
-        }
+    findItemIndex(id) {
         let index = -1;
         let items = this.state.items;
         for (let i = 0; i < items.length; i++) {
@@ -37,7 +36,15 @@ class AiPagination extends Component {
                 break;
             }
         }
+        return index;
+    }
 
+    deleteById(id) {
+        if (LOGGING_ENABLED) {
+            console.log("Deleting an item by id. Id: ", id, "\nitems:", this.state.items);
+        }
+        let index = this.findItemIndex(id);
+        let items = this.state.items;
         if (index === -1) {
             if (LOGGING_ENABLED) {
                 console.log("No one item with such id wasn't found");
@@ -81,6 +88,26 @@ class AiPagination extends Component {
         } else if (!deleted && LOGGING_ENABLED) {
             console.log("Cancel updating, it wasn't found any fit item");
         }
+    }
+
+    addItemIfAbsent(item) {
+        if (LOGGING_ENABLED) {
+            console.log("Adding an item. Checking is the item already in items. Item: ", item);
+        }
+        let index = this.findItemIndex(item.id);
+        if (index !== -1) {
+            console.log("The item is in items. Canceling");
+            return;
+        }
+
+        let items = this.state.items;
+        items.push(item);
+        if (LOGGING_ENABLED) {
+            console.log("The item wasn't found and was added. Re-rendering");
+        }
+        this.setState({
+            items: items
+        });
     }
 
     renderingContainer(items) {

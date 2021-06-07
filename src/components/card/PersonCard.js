@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Card} from "react-bootstrap";
 import {GET_ROLES_AS_STRING} from "../../services/person.service";
-import PersonComponent from "../typical/PersonComponent";
+import PersonComponent from "../entity/PersonComponent";
 
 class PersonCard extends Component {
     constructor(props) {

@@ -5,6 +5,7 @@ import {LOGGING_ENABLED} from "../../App";
 import Person from "../entity/Person";
 import ContainerPagination from "../paginated/ContainerPagination";
 import PersonCardEditable from "../card/PersonCardEditable";
+import PersonCard from "../card/PersonCard";
 
 class AdminBoard extends Component {
     constructor(props) {
@@ -72,6 +73,22 @@ class AdminBoard extends Component {
                                                              person={person}
                                                              ban={() => this.ban(this.managersComponent, person)}
                                                              unban={() => this.unban(this.managersComponent, person)}/>);
+                             }} />
+                    </Tab>
+                    <Tab eventKey={"admins"} title={"Администраторы"}>
+                        <ContainerPagination ref={(comp) => this.managersComponent = comp}
+                             gettingFunction={(page, size) => personService.getPersonsByRole("ADMIN", page, size)}
+                             itemsPageSize={3}
+                             renderingFunction={(person) => {
+                                 return (<PersonCard key={person.id} person={person} />);
+                             }} />
+                    </Tab>
+                    <Tab eventKey={"owners"} title={"Владельцы"}>
+                        <ContainerPagination ref={(comp) => this.managersComponent = comp}
+                             gettingFunction={(page, size) => personService.getPersonsByRole("OWNER", page, size)}
+                             itemsPageSize={3}
+                             renderingFunction={(person) => {
+                                 return (<PersonCard key={person.id} person={person} />);
                              }} />
                     </Tab>
                 </Tabs>
